@@ -13,7 +13,7 @@ router.post("/", (req, res) => {
     })
 
     .catch(err => {
-      error(req, res, err.message, 500, err);
+      error(req, res, err, 500, err);
     });
 });
 

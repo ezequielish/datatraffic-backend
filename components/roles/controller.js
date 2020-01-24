@@ -1,8 +1,9 @@
 const { list, add, update, deleteR } = require("./storage");
 
-function listRoles() {
+function listRoles(user) {
   return new Promise((resolve, reject) => {
-    const result = list();
+    const level = user["Role.level"];
+    const result = list(level);
     resolve(result);
   });
 }

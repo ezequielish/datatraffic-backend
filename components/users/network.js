@@ -6,16 +6,20 @@ const { list, add, edit, deleteU } = require("./controller");
 require("../../utils/auth/strategies/jwt");
 const validationHandler = require("../../utils/middlewares/validationHandler");
 
-router.get("/",
- (req, res) => {
-  list()
-    .then(data => {
-      success(req, res, data, 200);
-    })
-    .catch(err => {
-      error(req, res, err.message, 500, err);
-    });
-});
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  validationHandler(),
+  (req, res) => {
+    list(req.user)
+      .then(data => {
+        success(req, res, data, 200);
+      })
+      .catch(err => {
+        error(req, res, err.message, 500, err);
+      });
+  }
+);
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),

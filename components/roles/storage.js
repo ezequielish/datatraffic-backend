@@ -1,9 +1,18 @@
 "use strict";
 const connect = require("../../db");
+const { Op } = require('sequelize')
 
-async function getAll() {
+async function getAll(level) {
   const { RolesModel } = await connect();
-  const result = await RolesModel.findAll();
+  const cond = {
+    limit: 10,
+    where: {
+      level: {
+        [Op.lte]: level
+      }
+    }
+  };
+  const result = await RolesModel.findAll(cond);
   return result;
 }
 

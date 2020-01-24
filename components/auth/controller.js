@@ -1,5 +1,6 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const { add } = require("../logs/controller");
 const { token } = require("../../config");
 const { updateAccessToken } = require("../users/controller");
 const boom = require("@hapi/boom");
@@ -7,16 +8,18 @@ require("../../utils/auth/strategies/basic");
 
 function login(req, res) {
   return new Promise(async (resolve, reject) => {
+    
     passport.authenticate("basic", function(error, user) {
       //aplicamos estrategia basic
 
       try {
         if (error || !user) {
-          reject(boom.unauthorized());
+          return reject("Datos Inválidos");
+          
         }
         req.login(user, { session: false }, async function(error) {
           if (error) {
-            reject(boom.unauthorized());
+           return reject(boom.unauthorized());
           }
 
           const { RoleId, username, id } = user;
@@ -32,7 +35,8 @@ function login(req, res) {
           });
 
           updateAccessToken(jwtoken, id);
-          resolve({ jwtoken, user: { id } });
+          add("inicio sesion", id)
+          resolve({ jwtoken, user: { id }, rol: user['Role.level']  });
         });
       } catch (err) {
         reject(err);

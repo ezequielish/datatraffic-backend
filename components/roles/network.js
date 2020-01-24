@@ -6,8 +6,11 @@ const { success, error } = require("../../network/response");
 const { list, add, edit, deleteR } = require("./controller");
 require("../../utils/auth/strategies/jwt");
 const validationHandler = require("../../utils/middlewares/validationHandler");
-router.get("/", (req, res) => {
-  list()
+router.get("/", 
+passport.authenticate("jwt", { session: false }),
+validationHandler(),
+(req, res) => {
+  list(req.user)
     .then(data => {
       success(req, res, data, 200);
     })

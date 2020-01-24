@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon server.js",
-    "generate:key": "node ./scripts/generateKey.js"
+    "generate:key": "node ./scripts/generateKey.js",
+    "generate:roles": " node ./scripts/seedRoles.js",
+    "generate:users": " node ./scripts/seedUsers.js "
   },
   "author": "@ezequiel_ish",
   "license": "MIT",
@@ -30,5 +32,8 @@
     "pg": "^7.17.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3"
+  },
+  "devDependencies": {
+    "yargs": "^15.1.0"
   }
 }

@@ -32,7 +32,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   validationHandler(),
   (req, res) => {
-    add(req)
+    add(req.body.action, req.user.id)
       .then(data => {
         success(req, res, data, 200);
       })

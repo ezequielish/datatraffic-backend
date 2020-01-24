@@ -1,8 +1,10 @@
 const { list, get, add, update, deleteU, updateToken } = require("./storage");
 
-function listUsers() {
+function listUsers(user) {
   return new Promise((resolve, reject) => {
-    const result = list();
+    const level = user["Role.level"];
+
+    const result = list(level);
     resolve(result);
   });
 }
@@ -14,6 +16,7 @@ function getUser(user) {
 }
 function addUser(data) {
   return new Promise(async (resolve, reject) => {
+    
     if (!data.username || !data.password || typeof data.rol_id != "number") {
       console.log("[UsersController] User inválido");
       reject("Los datos son incorrectos");
@@ -51,7 +54,6 @@ function editUser(data) {
 }
 
 async function updateAccessToken(token, id) {
- 
   await updateToken(token, id);
 }
 

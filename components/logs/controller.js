@@ -7,16 +7,16 @@ function listLogs(q) {
   });
 }
 
-function addLog(data) {
+function addLog(action, id) {
   return new Promise(async (resolve, reject) => {
-    if (!data.body.action || !data.user.id) {
+    if (!action || !id) {
       console.log("[LogsController] datos inválido");
       reject("Los datos son incorrectos");
     } else {
       const log = {
-        action: data.body.action,
+        action: action,
         datetime: new Date(),
-        UserId: data.user.id
+        UserId: id
       };
 
       const result = await add(log);
@@ -27,6 +27,13 @@ function addLog(data) {
     }
   });
 }
+
+module.exports = {
+    list: listLogs,
+  add: addLog
+};
+
+
 
 module.exports = {
     list: listLogs,

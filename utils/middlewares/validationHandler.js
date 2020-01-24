@@ -11,9 +11,10 @@ function validationHandler() {
     if (!req.user || (req.user && !req.user["Role.level"])) {
       next(boom.unauthorized("Missing scopes"));
     }
-    if (req.baseUrl != "/api/login") {
+    
+    if (req.baseUrl == "/api/user" || req.baseUrl == "/api/roles" && req.method != "GET") {
       if (req.user["Role.level"] != 99) {
-        next(boom.unauthorized("unauthorized"));
+        next(boom.unauthorized());
       }
     }
 

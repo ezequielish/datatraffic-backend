@@ -1,13 +1,21 @@
 "use strict";
 const connect = require("../../db");
-
-async function getAll() {
+const { Op } = require("sequelize");
+async function getAll(level) {
   const { UsersModel, RolesModel } = await connect();
   const cond = {
+    limit: 10,
+    attributes: ["id", "username", "status", "RoleId", "password"],
     include: [
       {
         // join
-        model: RolesModel
+        model: RolesModel,
+        where: {
+          level: {
+            [Op.lte]: level
+          }
+        },
+        attributes: ["level", "name"]
       }
     ],
     raw: true
@@ -86,7 +94,6 @@ async function updateAccessToken(token, id) {
   };
 
   const update = await UsersModel.update(access_token, cond);
- 
 }
 async function deleteUser(id) {
   const cond = {
@@ -94,9 +101,20 @@ async function deleteUser(id) {
       id
     }
   };
-  const { UsersModel } = await connect();
+  const condLogs = {
+    where: {
+      UserId: id
+    }
+  };
+
+  const { UsersModel, LogsModel } = await connect();
+
   let existsUser = await UsersModel.findOne(cond);
+  let existsUserLogs = await LogsModel.findOne(condLogs);
   if (!existsUser) {
+    return false;
+  }
+  if (existsUserLogs) {
     return false;
   }
   let result = await UsersModel.destroy(cond);

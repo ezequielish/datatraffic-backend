@@ -7,8 +7,7 @@ const config = {
   password: process.env.PASSWORD_DB,
   database: process.env.DB,
   token: process.env.TOKEN,
-  // publicRoute: process.env.PUBLIC_ROUTE || '/app',
-  // filesRoute: process.env.FILES_ROUTE || 'files'
+  setupDB: process.env.SETUP_DB
 };
 
 module.exports = {
@@ -17,5 +16,6 @@ module.exports = {
   database: config.database,
   user_db: config.user_db,
   port_serve: config.port_serve,
-  token: config.token
+  token: config.token,
+  setupDB: config.setupDB
 };

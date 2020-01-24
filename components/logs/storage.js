@@ -7,7 +7,8 @@ async function getAll(q) {
     where: {
       action: q
     },
-    order: [['datetime', 'DESC']], // ordenador por fecha de creación y descendiente
+    limit: 10, // limite de filas
+    order: [['datetime', 'ASC']], // ordenador por fecha de creación y descendiente
     include: [
       {
         // join
