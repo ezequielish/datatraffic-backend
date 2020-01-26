@@ -1,6 +1,6 @@
 require("dotenv").config();
 const config = {
-  port_serve: process.env.PORT_APP,
+
   port_db: process.env.PORT_DB,
   host_app: process.env.HOST,
   host_db: process.env.HOST_DB,
@@ -17,7 +17,6 @@ module.exports = {
   password: config.password,
   database: config.database,
   user_db: config.user_db,
-  port_serve: config.port_serve,
   token: config.token,
   setupDB: config.setupDB
 };

@@ -9,6 +9,7 @@ const { host_app, port_serve } = require("./config");
 const { routes } = require('./network/routes')
 
 const corsOptions = { origin: "*" };
+const port = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -26,6 +27,7 @@ app.use(logErrors);
 app.use(wrapErrors);
 app.use(errorHandler);
 
-server.listen(port_serve, function() {
-  console.log("La aplicación está escuchando en " + host_app + ":" + port_serve);
-});
+
+app.listen(port, () =>{
+    console.log(`Escuchando en el puerto ${port}`)
+})
