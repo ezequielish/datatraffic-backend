@@ -9,7 +9,7 @@ const relationRolesUsers = require("./relations/RolesUsers");
 const relationUsersLogs = require("./relations/UsersLogs");
 
 
-const { host, password, database, user_db, setupDB } = require("../config");
+const { host_db, password, database, user_db, setupDB } = require("../config");
 
 
 const setupConfig = (setupDB == 'true')
@@ -21,11 +21,13 @@ module.exports = async function() {
       database: database,
       username: user_db,
       password: password,
-      host: host,
-      dialect: "postgres"
+      host: host_db,
     };
    const config = defaults(configConnect, {
-      dialect: "postgres",
+     dialect: "postgres",
+        dialectOptions: {
+            ssl: true
+        },
       setup: setupConfig,
       pool: {
         max: 10,
